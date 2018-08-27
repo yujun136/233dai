@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/table_jqgrid.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:02 GMT -->
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>H+ 后台主题UI框架 - jqGird</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="__ADMIN__/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="__ADMIN__/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+
+    <!-- jqgrid-->
+    <link href="__ADMIN__/css/plugins/jqgrid/ui.jqgridffe4.css?0820" rel="stylesheet">
+
+    <link href="__ADMIN__/css/animate.min.css" rel="stylesheet">
+    <link href="__ADMIN__/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+
+    <style>
+        /* Additional style to fix warning dialog position */
+
+        #alertmod_table_list_2 {
+            top: 900px !important;
+        }
+    </style>
+
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>顺鱼金服科技</h5>
+                </div>
+                <div class="ibox-content">
+                    <h4 class="m-t" style="margin: 10px 0 20px 0">VIP 您 好 </h4>
+                    <div class="jqGrid_wrapper">
+                        <table id="table_list_2"></table>
+                        <div id="pager_list_2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="__ADMIN__/js/jquery.min.js?v=2.1.4"></script>
+<script src="__ADMIN__/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="__ADMIN__/js/plugins/peity/jquery.peity.min.js"></script>
+<script src="__ADMIN__/js/plugins/jqgrid/i18n/grid.locale-cnffe4.js?0820"></script>
+<script src="__ADMIN__/js/plugins/jqgrid/jquery.jqGrid.minffe4.js?0820"></script>
+<script src="__ADMIN__/js/content.min.js?v=1.0.0"></script>
+<script>
+    $(document).ready(function () {
+        $.jgrid.defaults.styleUI = "Bootstrap";
+        var mydata = [{
+            id: "1",
+            invdate: "2010-05-24",
+            name: "test",
+            note: "note",
+            tax: "10.00",
+            total: "2111.00"
+        }];
+
+        var resdata ;
+        $.post("{:url('home_page_con/getallcustomers')}", {},
+                function(data,status){
+                    resdata = data;
+                    $("#table_list2").jqGrid('clearGridData');  //清空表格
+                    $("#table_list_2").jqGrid('setGridParam',{  // 重新加载数据
+                        datatype:'local',
+                        data : resdata,   //  resdata 是符合格式要求的需要重新加载的数据
+                        page:1
+                    }).trigger("reloadGrid");
+                });
+
+
+        $("#table_list_2").jqGrid({
+            data:resdata,
+            datatype: "local",
+            height: 450,
+            autowidth: true,
+            shrinkToFit: true,
+            rowNum: 20,
+            rowList: [10, 20, 30],
+            colNames: ["姓名", "手机号", "年龄", "性别", "芝麻分", "户籍所在地", "现居住地", "公积金", "信用卡", "逾期", "车贷", "房贷", "车贷金额", "房贷金额", "费用", "备注", "抢单"],
+            colModel: [{
+                name: "name",
+                index: "name",
+                editable: true,
+                width: 40,
+                search: true
+            }, {
+                name: "telphone",
+                index: "telphone",
+                editable: true,
+                width: 50
+            }, {
+                name: "age",
+                index: "age",
+                editable: true,
+                width: 30
+            }, {
+                name: "sex",
+                index: "sex",
+                editable: true,
+                width: 20
+            }, {
+                name: "zhimascore",
+                index: "zhimascore",
+                editable: true,
+                width: 30
+            }, {name: "hujiadress", index: "hujiadress", editable: true, width: 100, sortable: false}
+                , {
+                    name: "nowliveadress",
+                    index: "nowliveadress",
+                    editable: true,
+                    width: 100
+                }, {
+                    name: "isgongjijin",
+                    index: "isgongjijin",
+                    editable: true,
+                    width: 20
+                }, {
+                    name: "iscreditcard",
+                    index: "iscreditcard",
+                    editable: true,
+                    width: 20
+                }, {
+                    name: "isoverdue",
+                    index: "isoverdue",
+                    editable: true,
+                    width: 20
+                }, {
+                    name: "iscarloan",
+                    index: "iscarloan",
+                    editable: true,
+                    width: 20
+                }, {
+                    name: "ishouseloan",
+                    index: "ishouseloan",
+                    editable: true,
+                    width: 20
+                }, {
+                    name: "carloansum",
+                    index: "carloansum",
+                    editable: true,
+                    width: 30
+                }, {
+                    name: "houseloansum",
+                    index: "houseloansum",
+                    editable: true,
+                    width: 40
+                }, {
+                    name: "fee",
+                    index: "fee",
+                    editable: true,
+                    width: 30
+                }, {
+                    name: "beizhu",
+                    index: "beizhu",
+                    editable: true,
+                    width: 80
+                }, {
+                    name: "qiangdan",
+                    index: "qiangdan",
+                    align:"center",
+                    editable:true,
+                    edittype:"button",
+                    editoptions:{dataUrl:"12113212"},
+                    width: 30
+                }],
+            rownumbers:true,//添加左侧行号
+            pager: "#pager_list_2",
+            viewrecords: true,
+            caption: "平台客户列表",
+            add: true,
+            edit: true,
+            addtext: "Add",
+            edittext: "Edit",
+            hidegrid: false
+        });
+        $("#table_list_2").setSelection(4, true);
+        $("#table_list_2").jqGrid("navGrid", "#pager_list_2", {
+            edit: false,
+            add: false,
+            del: false,
+            search: true
+        }, {height: 200, reloadAfterSubmit: true});
+        $(window).bind("resize", function () {
+            var width = $(".jqGrid_wrapper").width();
+            $("#table_list_2").setGridWidth(width);
+            $("#table_list_2").setGridWidth(width)
+        })
+    });
+</script>
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/table_jqgrid.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:02 GMT -->
+</html>
